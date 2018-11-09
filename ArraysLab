@@ -1,0 +1,114 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] arr = null;
+            arr = CreateUniqueArray(10);
+            printArray(arr);
+            findChangeCount(arr);
+
+        }
+
+        static void printArray(int[] a)
+        {
+            Console.Write("Элементы массива:");
+            for (int i = 0; i < a.Length; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($" {a[i]}");
+                Console.ResetColor();
+            }
+            Console.WriteLine();
+        }
+
+        public static bool findEL(int[] a, int el)
+        {
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] == el)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static int[] CreateArray(int lg)
+        {
+
+            int[] nums = new int[lg];
+            Random rand = new Random();
+
+            for (int i = 0; i < nums.Length; i++)
+            {   
+                nums[i] = rand.Next(-100, 100);
+            }
+            return nums;
+        }
+
+        static int[] CreateUniqueArray(int length)
+        {
+            var random = new Random();
+            int[] nums = new int[length];
+            for (int i = 0; i < length; ++i)
+            {
+                bool isUnique;
+                do
+                {
+                    nums[i] = random.Next(-20, 20);
+                    isUnique = true;
+                    for (int j = 0; j < i; ++j)
+                        if (nums[i] == nums[j] || nums[i]==0)
+                        {
+                            isUnique = false;
+                            break;
+                        }
+                } while (!isUnique);
+            }
+            return nums;
+        }
+
+        static void findChangeCount(int[] a)
+        {
+            int count = 0;
+            for (int i = 0; i < a.Length-1; i++)
+            {
+                if (((a[i]>0) && (a[i+1]<0)) || (a[i] < 0) && (a[i + 1] > 0))
+                {
+                    count++;
+                }
+            }
+            Console.WriteLine($"Количество смен знака = {count}");
+        }
+
+        static void findPlace(int[] a)
+        {
+            if ((a.Length==365) || (a.Length == 366)) {
+                Console.WriteLine("Массив должен быть = 365 или 366");
+            }
+
+            int north, south, oriental, east, west, northwest = 0;
+
+            for (int i=0; i<a.Length; i++)
+            {
+                switch (a[i])
+                {
+                    case 1:
+
+                        break;
+                }
+                
+            }
+        }
+
+
+    }
+}
