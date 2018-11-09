@@ -268,5 +268,27 @@ namespace ConsoleApp4
             }
             return nums;
         }
+        
+        static int[] CreateUniqueArray(int length)
+        {
+            var random = new Random();
+            int[] nums = new int[length];
+            for (int i = 0; i < length; ++i)
+            {
+                bool isUnique;
+                do
+                {
+                    nums[i] = random.Next(0, 20);
+                    isUnique = true;
+                    for (int j = 0; j < i; ++j)
+                        if (nums[i] == nums[j])
+                        {
+                            isUnique = false;
+                            break;
+                        }
+                } while (!isUnique);
+            }
+            return nums;
+        }
     }
 }
