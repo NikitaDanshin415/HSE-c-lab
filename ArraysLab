@@ -4,111 +4,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1
+namespace ConsoleApplication15
 {
     class Program
     {
         static void Main(string[] args)
         {
-            int[] arr = null;
-            arr = CreateUniqueArray(10);
-            printArray(arr);
-            findChangeCount(arr);
+            float b = 2, a = 1, k = 10;
 
-        }
-
-        static void printArray(int[] a)
-        {
-            Console.Write("Элементы массива:");
-            for (int i = 0; i < a.Length; i++)
+            for (double x = 1; x <= 2; x += (b - a) / k)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write($" {a[i]}");
-                Console.ResetColor();
-            }
-            Console.WriteLine();
-        }
+                Console.Write($"X = {x} |");
+                double s = 0;
 
-        public static bool findEL(int[] a, int el)
-        {
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (a[i] == el)
+                for (int n = 0; n <= 15; n++)
                 {
-                    return true;
+                    s += Math.Pow(x, n) / (int)fa(n);
                 }
-            }
-            return false;
-        }
+                Console.Write($"SN = {s} |");
 
-        public static int[] CreateArray(int lg)
-        {
 
-            int[] nums = new int[lg];
-            Random rand = new Random();
+                Console.Write($"Y = {Math.Pow(Math.E, x)} |");
 
-            for (int i = 0; i < nums.Length; i++)
-            {   
-                nums[i] = rand.Next(-100, 100);
-            }
-            return nums;
-        }
+                const double eps = 0.0001;
+                double se = 1;
+                double fact2 = 1;
+                int m = 1;
+                double currentTerm = 1;
 
-        static int[] CreateUniqueArray(int length)
-        {
-            var random = new Random();
-            int[] nums = new int[length];
-            for (int i = 0; i < length; ++i)
-            {
-                bool isUnique;
-                do
+                while (currentTerm > eps)
                 {
-                    nums[i] = random.Next(-20, 20);
-                    isUnique = true;
-                    for (int j = 0; j < i; ++j)
-                        if (nums[i] == nums[j] || nums[i]==0)
-                        {
-                            isUnique = false;
-                            break;
-                        }
-                } while (!isUnique);
-            }
-            return nums;
-        }
-
-        static void findChangeCount(int[] a)
-        {
-            int count = 0;
-            for (int i = 0; i < a.Length-1; i++)
-            {
-                if (((a[i]>0) && (a[i+1]<0)) || (a[i] < 0) && (a[i + 1] > 0))
-                {
-                    count++;
+                    fact2 = fa(m);
+                    currentTerm = Math.Pow(x, m) / (int)fa(m);
+                    se = se + currentTerm;
+                    m++;
                 }
+
+                Console.Write($"SE = {se} |");
+                Console.WriteLine();
+
+
             }
-            Console.WriteLine($"Количество смен знака = {count}");
+
         }
 
-        static void findPlace(int[] a)
+        static double fa(double x)
         {
-            if ((a.Length==365) || (a.Length == 366)) {
-                Console.WriteLine("Массив должен быть = 365 или 366");
-            }
-
-            int north, south, oriental, east, west, northwest = 0;
-
-            for (int i=0; i<a.Length; i++)
+            double result = 1;
+            for (int i = 1; i <= x; i++)
             {
-                switch (a[i])
-                {
-                    case 1:
-
-                        break;
-                }
-                
+                result *= i;
             }
+            return result;
         }
-
-
     }
 }
