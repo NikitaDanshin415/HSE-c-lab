@@ -14,22 +14,23 @@ namespace ConsoleApplication11
             int[,] numsQ;
             int[][] numsR;
 
-            //int lg;
-            //Console.Write("Введите длину массива = ");
-            //while (!int.TryParse(Console.ReadLine(), out lg))
-            //{
-            //    Console.Write("Ошибка, введите длину массива = ");
-            //}
-            //nums = CreateArray(lg);
-            //printArray(nums);
-            //int k;
-            //Console.Write("Введите K = ");
-            //while (!int.TryParse(Console.ReadLine(), out k))
-            //{
-            //    Console.Write("Ошибка, введите K = ");
-            //}
-            //nums = dellElem(nums, k);
-            //printArray(nums);
+
+            int lg;
+            Console.Write("Введите длину массива = ");
+            while (!int.TryParse(Console.ReadLine(), out lg))
+            {
+                Console.Write("Ошибка, введите длину массива = ");
+            }
+            nums = CreateArray(lg);
+            printArray(nums);
+            int k;
+            Console.Write("Введите K = ");
+            while (!int.TryParse(Console.ReadLine(), out k))
+            {
+                Console.Write("Ошибка, введите K = ");
+            }
+            nums = dellElem(nums, k);
+            printArray(nums);
 
 
             numsQ = CreateQuadArray(5, 6);
@@ -189,14 +190,14 @@ namespace ConsoleApplication11
 
             Console.Write("Введите строку с которой начать удаление = ");
 
-            while ((!int.TryParse(Console.ReadLine(), out delStart)) || (delStart < 0))
+            while ((!int.TryParse(Console.ReadLine(), out delStart)) || (delStart < 0) || (delStart > a.Length))
             {
                 Console.WriteLine("Ошибка ввода");
             }
 
             Console.Write("Сколько строк удалить? = ");
 
-            while ((!int.TryParse(Console.ReadLine(), out delCount)) || (delCount < 0))
+            while ((!int.TryParse(Console.ReadLine(), out delCount)) || (delCount < 0) || (delCount > a.Length))
             {
                 Console.WriteLine("Ошибка ввода");
             }
