@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp5
+namespace ConsoleApplication11
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             int[] nums;
             int[,] numsQ;
             int[][] numsR;
+
             //int lg;
             //Console.Write("Введите длину массива = ");
             //while (!int.TryParse(Console.ReadLine(), out lg))
@@ -38,7 +38,7 @@ namespace ConsoleApp5
             printQuadArray(numsQ);
             numsR = CreateaRaggedArray(5, 5);
             printRaggedArray(numsR);
-            numsR = dellStrings(numsR, 3, 4);
+            numsR = dellStrings(numsR);
             printRaggedArray(numsR);
 
         }
@@ -183,36 +183,40 @@ namespace ConsoleApp5
 
 
 
-        public static int[][] dellStrings(int[][] a, int k1, int k2)
+        public static int[][] dellStrings(int[][] a)
         {
-            int lg = 0;
+            int delStart = 0, delCount = 0, lg = 0;
 
-            if (k1 < k2)
+            Console.Write("Введите строку с которой начать удаление = ");
+
+            while ((!int.TryParse(Console.ReadLine(), out delStart)) || (delStart < 0))
             {
-                lg = a.Length - (k2 - k1);
+                Console.WriteLine("Ошибка ввода");
             }
-            else if (k1 > k2)
+
+            Console.Write("Сколько строк удалить? = ");
+
+            while ((!int.TryParse(Console.ReadLine(), out delCount)) || (delCount < 0))
             {
-                Console.WriteLine("Число к1 должно быть меньше к2");
+                Console.WriteLine("Ошибка ввода");
             }
-            else
-            {
-                lg = a.Length - 1;
-            }
+
+            lg = a.Length - (delCount + 1);
 
             int[][] nums = new int[lg][];
+
             int j = 0;
-            for (int i = 0; i < lg; i++)
+
+            for (int i = 0; i < a.Length; i++)
             {
-                if (i!=2)
+                if (i < delStart || delStart + delCount < i)
                 {
                     nums[j] = a[i];
                     j++;
                 }
-                
+
             }
             return nums;
         }
     }
 }
-
