@@ -76,12 +76,13 @@ namespace ConsoleApp5
         {
             Console.Write("Элементы массива:");
             Console.WriteLine();
-            foreach (int[] row in a)
+
+            for (int i = 0; i < a.Length; i++)
             {
-                foreach (int number in row)
+                for (int j = 0; j < a[i].Length; j++)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write(String.Format("{0,3} ", number));
+                    Console.Write(String.Format("{0,3} ", a[i][j]));
                     Console.ResetColor();
                 }
                 Console.WriteLine();
