@@ -208,10 +208,6 @@ namespace ConsoleApp5
                     nums[j] = a[i];
                     j++;
                 }
-                else
-                {
-                    j--;
-                }
                 
             }
             return nums;
