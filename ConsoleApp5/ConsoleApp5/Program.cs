@@ -10,38 +10,230 @@ namespace ConsoleApplication11
     {
         static void Main(string[] args)
         {
-            int[] nums;
-            int[,] numsQ;
-            int[][] numsR;
-
-
-            int lg;
-            Console.Write("Введите длину массива = ");
-            while (!int.TryParse(Console.ReadLine(), out lg))
+            bool go = true;
+           
+            while (go)
             {
-                Console.Write("Ошибка, введите длину массива = ");
+                string selection = string.Empty;
+                Console.WriteLine("Нажмите: \n 1-Работа с одномерными массивами \n 2-Работа с двумерными массивамив \n 3-Работа с рваными массивами \n 0-выход");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("Введите команду: ");
+                Console.ResetColor();
+                selection = Console.ReadLine();
+                switch (selection)
+                {
+                    case "1":
+                        simpleArray();
+                        break;
+                    case "2":
+                        quadArray();
+                        break;
+                    case "3":
+                        raggedArray();
+                        break;
+                    case "0":
+                        go = false;
+                        break;
+                }
             }
-            nums = CreateArray(lg);
-            printArray(nums);
-            int k;
-            Console.Write("Введите K = ");
-            while (!int.TryParse(Console.ReadLine(), out k))
+        }
+
+        public static void printEmptyArrayError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Массив пустой, для заполнения массива выполните команду 1");
+            Console.ResetColor();
+        }
+
+        static void simpleArray()
+        {
+            string selection = string.Empty;
+
+
+            Console.WriteLine("Нажмите: \n 1-заполнить массив \n 2-распечатать массив \n 3-Удалить элементы массива \n 0-выход");
+            int[] nums = null;
+            while (selection != "0")
             {
-                Console.Write("Ошибка, введите K = ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("Введите команду: ");
+                Console.ResetColor();
+                selection = Console.ReadLine();
+
+                switch (selection)
+                {
+                    case "1":
+                        Console.Write("Введите длину массива = ");
+                        int lg;
+                        while (!int.TryParse(Console.ReadLine(), out lg))
+                        {
+                            Console.Write("Ошибка, введите длину массива = ");
+                        }
+                        nums = CreateArray(lg);
+                        printArray(nums);
+                        break;
+                    case "2":
+                        if (nums == null)
+                        {
+                            printEmptyArrayError();
+                            break;
+                        }
+                        else
+                        {
+                            printArray(nums);
+                            break;
+                        }
+                    case "3":
+                        if (nums == null)
+                        {
+                            printEmptyArrayError();
+                            break;
+                        }
+                        else
+                        {
+                            nums = dellElem(nums);
+                            printArray(nums);
+                            break;
+                        }
+                    case "0":
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Вы нажали неизвестную команду");
+                        Console.ResetColor();
+                        break;
+                }
             }
-            nums = dellElem(nums, k);
-            printArray(nums);
+        }
 
+        static void quadArray()
+        {
+            string selection = string.Empty;
+            Console.WriteLine("Нажмите: \n 1-заполнить массив \n 2-распечатать массив \n 3-Добавить столбец в начало \n 0-выход");
+            int[,] numsQ = null;
+            while (selection != "0")
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("Введите команду: ");
+                Console.ResetColor();
+                selection = Console.ReadLine();
 
-            numsQ = CreateQuadArray(5, 6);
-            printQuadArray(numsQ);
-            numsQ = addColumnInStart(numsQ);
-            printQuadArray(numsQ);
-            numsR = CreateaRaggedArray(5, 5);
-            printRaggedArray(numsR);
-            numsR = dellStrings(numsR);
-            printRaggedArray(numsR);
+                switch (selection)
+                {
+                    case "1":
 
+                        int strings,columns;
+                        Console.Write("Введите количество строк массива = ");
+                        while (!int.TryParse(Console.ReadLine(), out strings))
+                        {
+                            Console.Write("Ошибка ввода, введите целочисленное число = ");
+                        }
+
+                        Console.Write("Введите количество столбцов массива = ");
+                        while (!int.TryParse(Console.ReadLine(), out columns))
+                        {
+                            Console.Write("Ошибка ввода, введите целочисленное число = ");
+                        }
+                        numsQ = CreateQuadArray(strings,columns);
+                        printQuadArray(numsQ);
+                        break;
+                    case "2":
+                        if (numsQ == null)
+                        {
+                            printEmptyArrayError();                         
+                            break;
+                        }
+                        else
+                        {
+                            printQuadArray(numsQ);
+                            break;
+                        }
+                    case "3":
+                        if (numsQ == null)
+                        {
+                            printEmptyArrayError();
+                            break;
+                        }
+                        else
+                        {
+                            numsQ = addColumnInStart(numsQ);
+                            printQuadArray(numsQ);
+                            break;
+                        }
+                    case "0":
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Вы нажали неизвестную команду");
+                        Console.ResetColor();
+                        break;
+                }
+            }
+        }
+
+        static void raggedArray()
+        {
+
+            string selection = string.Empty;
+            Console.WriteLine("Нажмите: \n 1-заполнить рваный массив \n 2-распечатать рваный массив \n 3-Удалить строки \n 0-выход");
+            int[][] numsR = null;
+            while (selection != "0")
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("Введите команду: ");
+                Console.ResetColor();
+                selection = Console.ReadLine();
+
+                switch (selection)
+                {
+                    case "1":
+
+                        int strings, columns;
+                        Console.Write("Введите количество строк массива = ");
+                        while (!int.TryParse(Console.ReadLine(), out strings))
+                        {
+                            Console.Write("Ошибка ввода, введите целочисленное число = ");
+                        }
+
+                        Console.Write("Введите количество столбцов массива = ");
+                        while (!int.TryParse(Console.ReadLine(), out columns))
+                        {
+                            Console.Write("Ошибка ввода, введите целочисленное число = ");
+                        }
+                        numsR = CreateaRaggedArray(strings, columns);
+                        printRaggedArray(numsR);
+                        break;
+                    case "2":
+                        if (numsR == null)
+                        {
+                            printEmptyArrayError();
+                            break;
+                        }
+                        else
+                        {
+                            printRaggedArray(numsR);
+                            break;
+                        }
+                    case "3":
+                        if (numsR == null)
+                        {
+                            printEmptyArrayError();
+                            break;
+                        }
+                        else
+                        {
+                            numsR = dellStrings(numsR);
+                            printRaggedArray(numsR);
+                            break;
+                        }
+                    case "0":
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Вы нажали неизвестную команду");
+                        Console.ResetColor();
+                        break;
+                }
+            }
         }
 
         static void printArray(int[] a)
@@ -137,12 +329,19 @@ namespace ConsoleApplication11
             return nums;
         }
 
-        static int[] dellElem(int[] a, int k)
+        static int[] dellElem(int[] a)
         {
-            if (!(a.Length < k))
+            int count;
+            Console.WriteLine("Какое количество элементов с конца вы хотите удалить?");
+            while (!int.TryParse(Console.ReadLine(), out count))
             {
-                int[] b = new int[(a.Length - k - 1) + 1];
-                for (int i = 0; i < a.Length - k; i++)
+                Console.Write("Введите целочисленное число");
+            }
+
+            if (!(a.Length < count))
+            {
+                int[] b = new int[(a.Length - count - 1) + 1];
+                for (int i = 0; i < a.Length - count; i++)
                 {
                     b[i] = a[i];
                 }
@@ -181,7 +380,6 @@ namespace ConsoleApplication11
             }
             return nums;
         }
-
 
 
         public static int[][] dellStrings(int[][] a)
