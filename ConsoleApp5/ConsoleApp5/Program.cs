@@ -384,38 +384,47 @@ namespace ConsoleApplication11
 
         public static int[][] dellStrings(int[][] a)
         {
-            int delStart = 0, delCount = 0, lg = 0;
-
-            Console.Write("Введите строку с которой начать удаление = ");
-
-            while ((!int.TryParse(Console.ReadLine(), out delStart)) || (delStart < 0) || (delStart > a.Length))
-            {
-                Console.WriteLine("Ошибка ввода");
-            }
-
-            Console.Write("Сколько строк удалить? = ");
-
-            while ((!int.TryParse(Console.ReadLine(), out delCount)) || (delCount < 0) || (delCount > a.Length))
-            {
-                Console.WriteLine("Ошибка ввода");
-            }
-
+            int delStart = 0, delCount = 0, lg = 0;         
+        
             lg = a.Length - (delCount + 1);
-
-            int[][] nums = new int[lg][];
-
-            int j = 0;
-
-            for (int i = 0; i < a.Length; i++)
+            if (a.Length > 0)
             {
-                if (i < delStart || delStart + delCount < i)
+                int[][] nums = new int[lg][];
+                int j = 0;
+
+                Console.Write("Введите строку с которой начать удаление = ");
+                while ((!int.TryParse(Console.ReadLine(), out delStart)) || (delStart < 0) || (delStart > a.Length))
                 {
-                    nums[j] = a[i];
-                    j++;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Произошла ошибка, проверьте правильность введенных данных");
+                    Console.ResetColor();
                 }
 
+                Console.Write("Сколько строк удалить? = ");
+
+                while ((!int.TryParse(Console.ReadLine(), out delCount)) || (delCount <= 0) || (delCount > a.Length) || (delStart + delCount > a.Length))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Произошла ошибка, проверьте правильность введенных данных");
+                    Console.ResetColor();
+                }
+
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (i < delStart || delStart + delCount < i)
+                    {
+                        nums[j] = a[i];
+                        j++;
+                    }
+
+                }
+                return nums;
             }
-            return nums;
+            else
+            {
+                Console.WriteLine("Массив пустой");
+                return a;
+            }
         }
     }
 }
