@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication4
+namespace ConsoleApplication1
 {
     class Program
     {
@@ -36,17 +36,18 @@ namespace ConsoleApplication4
                 Console.WriteLine("Ошибка ввода. Введите целое положительное число.");
                 Console.Write("Введите количество строк = ");
             }
-            int[][] nums = new int[countColumn][];
+            //int[][] nums = new int[countString][];
+            char[][] charArr = new char[countString][];
             switch (methodCreate)
             {
-                case 1:                   
-                    createRaggedArrayRandomMethod(countColumn, countString, nums);
+                case 1:
+                    createRaggedArrayRandomMethod(countString, countColumn, charArr);
                     break;
-                case 2:                   
-                    createRaggedArrayHandMethod(countColumn, countString, nums);
+                case 2:
+                    createRaggedArrayHandMethod(countString, countColumn, charArr);
                     break;
             }
-            printRaggedArray(nums);
+            printRaggedArray(charArr);
 
 
         }
@@ -56,7 +57,7 @@ namespace ConsoleApplication4
             Console.WriteLine("Массив пустой, для заполнения массива выполните команду 1");
             Console.ResetColor();
         }
-        static void printRaggedArray(int[][] a)
+        static void printRaggedArray(char[][] a)
         {
             Console.Write("Элементы массива:");
             Console.WriteLine();
@@ -72,52 +73,47 @@ namespace ConsoleApplication4
                 Console.WriteLine();
             }
         }
-        public static void createRaggedArrayRandomMethod(int lg1, int lg2, int[][] nums)
+        public static void createRaggedArrayRandomMethod(int countString, int countColumn, char[][] charArr)
         {
 
             Random rand = new Random();
+            char[] someCharArr = new char[] {'q','w','e','r','t','y','u', 'i', 'o', 'p', 'a', 's', 'd', 'f', '1','2','3','4','5','6','7','8','9','0'} ;
 
-            for (int i = 0; i < lg1; i++)
+            for (int i = 0; i < countString; i++)
             {
-                int lg3 = rand.Next(1, lg2);
-                nums[i] = new int[lg3];
-                for (int j = 0; j < lg3; j++)
+                int randCountString = rand.Next(1, countColumn+1);
+                charArr[i] = new char[randCountString];
+                for (int j = 0; j < randCountString; j++)
                 {
-                    nums[i][j] = rand.Next(-100, 100);
+                    charArr[i][j] = someCharArr[rand.Next(0, someCharArr.Length-1)];
                 }
             }
 
         }
 
-        public static void createRaggedArrayHandMethod(int lg1, int lg2, int[][] nums)
+        public static void createRaggedArrayHandMethod(int countString, int countColumn, char[][] charArr)
         {
 
-            for (int i = 0; i < lg1; i++)
+            for (int i = 0; i < countString; i++)
             {
-                int strLen;
-                Console.WriteLine($"Введите количество элементов в строке {i + 1}");
-                while ((!int.TryParse(Console.ReadLine(), out strLen)) || (strLen <= 0) || (strLen > lg2))
-                {
-                    Console.WriteLine($"Ошибка ввода. Введите целое положительное число, не превышающее {lg2}");
-                    Console.Write($"Введите количество элементов в строке {i + 1}");
-                }
+               
+                Console.WriteLine($"Введите строку {i+1}");
 
+                string str = Console.ReadLine();
+                str = str.Replace(" ", string.Empty);
+                while (str.Length>countColumn || str.Length==0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"Ошибка ввода. Введите строку длина которой не превышает {countColumn}");
+                            Console.ResetColor();
+                            str = Console.ReadLine();
+                        }
                 
-                nums[i] = new int[strLen];
-                for (int j = 0; j < strLen; j++)
-                {
-                    Console.WriteLine($"Введите значение элемента {i}:{j}");
-                    while ((!int.TryParse(Console.ReadLine(), out nums[i][j])))
-                    {
-                        Console.WriteLine($"Ошибка ввода. Введите целое положительное число, не превышающее {lg2}");
-                        Console.WriteLine($"Введите значение элемента {i}:{j}");
-                    }
-                  
-                }
+                charArr[i] = str.ToArray<char>();
+
             }
 
-     
         }
     }
-  
+
 }
