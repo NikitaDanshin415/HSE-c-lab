@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ConsoleApplication1
@@ -77,7 +78,7 @@ namespace ConsoleApplication1
         {
 
             Random rand = new Random();
-            char[] someCharArr = new char[] {'q','w','e','r','t','y','u', 'i', 'o', 'p', 'a', 's', 'd', 'f', '1','2','3','4','5','6','7','8','9','0'} ;
+            char[] someCharArr = new char[] { 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
 
             for (int i = 0; i < countString; i++)
             {
@@ -113,6 +114,26 @@ namespace ConsoleApplication1
 
             }
 
+        }
+
+        public static void dellLast(char[][] charArr)
+        {
+            for (int i = 0; i < charArr.Length; i++)
+            {
+                int count = 0;
+                for (int j = 0; j < charArr[i].Length; j++) {
+                    if (Char.IsDigit(charArr[i][j]))
+                    {
+                        count++;
+                        if (count == 3)
+                        {
+                            //delString
+                        }
+                    }
+                }
+            }
+
+           
         }
     }
 
