@@ -61,7 +61,7 @@ namespace ConsoleApp1
             while (go)
             {
                 string selection = string.Empty;
-                writeMenu("Выберете задание: \n 1)Удаление строки из массива \n 2)Поиск ключевых слов c# \n 3)Отчистить массив");
+                writeMenu("Выберете задание: \n 1)Удаление строки из массива \n 2)Поиск ключевых слов c# \n 3)Отчистить консоль");
                 writeMenu("Введите команду: ");
                 selection = Console.ReadLine();
                 switch (selection)
@@ -335,7 +335,7 @@ namespace ConsoleApp1
                         writeMenu("Нажмите: \n 1)Ввести строку \n 2)распечатать строку \n 3)Найти слова c# \n 0)выход");
                         break;
                     case "2":
-                        writeSuc("Вы ввели" + userStr);
+                        writeSuc("Вы ввели: " + userStr);
                         writeMenu("Нажмите: \n 1)Ввести строку \n 2)распечатать строку \n 3)Найти слова c# \n 0)выход");
                         break;
                     case "3":
