@@ -61,18 +61,19 @@ namespace ConsoleApp1
             while (go)
             {
                 string selection = string.Empty;
-                Console.WriteLine("Выберете задание: \n 1)Удаление строки из массива \n 2)Поиск ключевых слов c#");
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write("Введите команду: ");
-                Console.ResetColor();
+                writeMenu("Выберете задание: \n 1)Удаление строки из массива \n 2)Поиск ключевых слов c# \n 3)Отчистить массив");
+                writeMenu("Введите команду: ");
                 selection = Console.ReadLine();
                 switch (selection)
                 {
                     case "1":
-                        dellFromString();
+                        dellFromArray();
                         break;
                     case "2":
                         findKeyWords();
+                        break;
+                    case "3":
+                        Console.Clear();
                         break;
                     case "0":
                         go = false;
@@ -83,7 +84,7 @@ namespace ConsoleApp1
 
 
 
-    
+
 
         public static void printEmptyArrayError()
         {
@@ -94,9 +95,7 @@ namespace ConsoleApp1
 
         static void printRaggedArray(char[][] a)
         {
-            Console.Write("Элементы массива:");
-            Console.WriteLine();
-
+            writeMenu("Элементы массива:");
             for (int i = 0; i < a.Length; i++)
             {
                 for (int j = 0; j < a[i].Length; j++)
@@ -132,15 +131,14 @@ namespace ConsoleApp1
             for (int i = 0; i < countString; i++)
             {
 
-                Console.WriteLine($"Введите строку {i + 1}");
+                writeMenu($"Введите строку {i + 1}");
 
                 string str = Console.ReadLine();
                 str = str.Replace(" ", string.Empty);
                 while (str.Length > countColumn || str.Length == 0)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Ошибка ввода. Введите строку длина которой не превышает {countColumn}");
-                    Console.ResetColor();
+                    writeError($"Ошибка ввода. Введите строку длина которой не превышает {countColumn}");
+                    writeMenu($"Введите строку {i + 1}");
                     str = Console.ReadLine();
                 }
 
@@ -163,12 +161,14 @@ namespace ConsoleApp1
                         if (count == 3)
                         {
                             charArr = removeString(charArr, i);
-                            Console.WriteLine($"Строка {i + 1} была удалена");
+                            writeSuc($"Строка {i + 1} была удалена");
                             return charArr;
                         }
+
                     }
                 }
             }
+            writeError($"В массиве нет строк содержащих 3 и более чисел");
             return charArr;
         }
 
@@ -187,96 +187,168 @@ namespace ConsoleApp1
 
         public static void isKeyWord(string str)
         {
-            string[] words = new string[] { "for", "if", "static", "integer","real","this","class" };
+            string[] words = new string[] { "for", "if", "static", "integer", "real", "this", "class" };
             str = str.ToLower();
+            bool isset = false;
             for (int i = 0; i < words.Length; i++)
-            {              
+            {
                 Regex regex = new Regex($@"(^|\b){words[i]}\b");
                 MatchCollection matches = regex.Matches(str);
-                Console.WriteLine($"{words[i]} встретилось {matches.Count} раз");
+                if (matches.Count > 0)
+                {
+                    writeSuc($"{words[i]} встретилось {matches.Count} раз");
+                    isset = true;
+                }
+            }
+            if (!isset)
+            {
+                writeError("В введенной строке нет ключевых слов c# (for , if , static, integer, real, this, class)");
             }
 
         }
 
+        public static void writeError(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(text);
+            Console.ResetColor();
+
+        }
+
+        public static void writeMenu(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine(text);
+            Console.ResetColor();
+
+        }
+
+        public static void writeSuc(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine(text);
+            Console.ResetColor();
+
+        }
 
         public static void dellFromArray()
         {
-            Console.WriteLine("Нажмите: \n 1-заполнить массив \n 2-распечатать массив \n 3-Удалить строку и массива \n 0-выход");
-            int[] nums = null;
+            writeMenu("Нажмите: \n 1)заполнить массив \n 2)распечатать массив \n 3)Удалить строку и массива \n 0)выход");
+            char[][] charArr = null;
             string selection = string.Empty;
             while (selection != "0")
             {
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write("Введите команду: ");
-                Console.ResetColor();
+                writeMenu("Введите команду: ");
                 selection = Console.ReadLine();
-
                 switch (selection)
                 {
                     case "1":
-                        Console.WriteLine("Введите максимальное количество столбцов в массиве");
+                        writeMenu("Введите максимальное количество столбцов в массиве");
                         int countColumn;
-                            while ((!int.TryParse(Console.ReadLine(), out countColumn)) || (countColumn <= 0))
-                            {
-                                Console.WriteLine("Ошибка ввода. Введите целое положительное число.");
-                                Console.Write("Введите максимальное количество столбцов = ");
-                            }
+                        while ((!int.TryParse(Console.ReadLine(), out countColumn)) || (countColumn <= 0))
+                        {
+                            writeError("Ошибка ввода. Введите целое положительное число.");
+                            writeMenu("Введите максимальное количество столбцов = ");
+                        }
 
-                        Console.WriteLine("Введите количество строк в массиве");
+                        writeMenu("Введите количество строк в массиве");
                         int countString;
-                            while ((!int.TryParse(Console.ReadLine(), out countString)) || (countString <= 0))
-                            {
-                                Console.WriteLine("Ошибка ввода. Введите целое положительное число.");
-                                Console.Write("Введите количество строк = ");
-                            }
-                        Console.WriteLine("Каким способом заполнить массив?");
+                        while ((!int.TryParse(Console.ReadLine(), out countString)) || (countString <= 0))
+                        {
+                            writeError("Ошибка ввода. Введите целое положительное число.");
+                            writeMenu("Введите количество строк = ");
+                        }
+
+
+                        charArr = new char[countString][];
+                        writeMenu("Каким способом заполнить массив? \n 1)ДЧС \n 2)В ручную");
                         string methodCreate = Console.ReadLine();
                         switch (methodCreate)
                         {
                             case "1":
                                 createRaggedArrayRandomMethod(countString, countColumn, charArr);
+                                printRaggedArray(charArr);
                                 break;
                             case "2":
                                 createRaggedArrayHandMethod(countString, countColumn, charArr);
+                                printRaggedArray(charArr);
                                 break;
-                            case "0":                               
+                            case "0":
                                 break;
                             default:
-                                Console.WriteLine("Вы ввели неверную команду");
+                                writeError("Вы ввели неверную команду");
+                                writeMenu("Каким способом заполнить массив? \n 1)ДЧС \n 2)В ручную");
                                 break;
                         }
-
+                        writeMenu("Нажмите: \n 1)заполнить массив \n 2)распечатать массив \n 3)Удалить строку и массива \n 0)выход");
                         break;
                     case "2":
-                        if (nums == null)
+                        if (charArr == null)
                         {
                             printEmptyArrayError();
                             break;
                         }
                         else
                         {
-                            printArray(nums);
+                            printRaggedArray(charArr);
+                            writeMenu("Нажмите: \n 1)заполнить массив \n 2)распечатать массив \n 3)Удалить строку и массива \n 0)выход");
                             break;
                         }
+
                     case "3":
-                        if (nums == null)
+                        if (charArr == null)
                         {
                             printEmptyArrayError();
                             break;
                         }
                         else
                         {
-                            nums = dellElem(nums);
-                            printArray(nums);
+                            charArr = dellLast(charArr);
+                            printRaggedArray(charArr);
+                            writeMenu("Нажмите: \n 1)заполнить массив \n 2)распечатать массив \n 3)Удалить строку и массива \n 0)выход");
                             break;
                         }
                     case "0":
                         break;
                     default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Вы нажали неизвестную команду");
-                        Console.ResetColor();
+                        writeError("Вы нажали неизвестную команду");
+                        writeMenu("Нажмите: \n 1)заполнить массив \n 2)распечатать массив \n 3)Удалить строку и массива \n 0)выход");
                         break;
+                }
+            }
+        }
+
+        public static void findKeyWords()
+        {
+            writeMenu("Нажмите: \n 1)Ввести строку \n 2)распечатать строку \n 3)Найти слова c# \n 0)выход");
+            string userStr = null;
+            string selection = string.Empty;
+            while (selection != "0")
+            {
+                writeMenu("Введите команду: ");
+                selection = Console.ReadLine();
+                switch (selection)
+                {
+                    case "1":
+                        writeMenu("Введите строку");
+                        userStr = Console.ReadLine();
+                        writeMenu("Нажмите: \n 1)Ввести строку \n 2)распечатать строку \n 3)Найти слова c# \n 0)выход");
+                        break;
+                    case "2":
+                        writeSuc("Вы ввели" + userStr);
+                        writeMenu("Нажмите: \n 1)Ввести строку \n 2)распечатать строку \n 3)Найти слова c# \n 0)выход");
+                        break;
+                    case "3":
+                        isKeyWord(userStr);
+                        writeMenu("Нажмите: \n 1)Ввести строку \n 2)распечатать строку \n 3)Найти слова c# \n 0)выход");
+                        break;
+                    case "0":
+                        break;
+                    default:
+                        writeError("Вы ввели неизвестную команду");
+                        writeMenu("Нажмите: \n 1)Ввести строку \n 2)распечатать строку \n 3)Найти слова c# \n 0)выход");
+                        break;
+
                 }
             }
         }
