@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication9
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ListItem head = null;
+
+            addToHead(ref head, 5);
+            addToHead(ref head, 10);
+            addToHead(ref head, 15);
+
+            //head.Next = new ListItem();
+            //head.Next.Info = 10;
+
+            //head.Next.Next = new ListItem();
+            //head.Next.Next.Info = 15;
+
+            PrintRec(head);
+            addToTail(ref head, 20);
+            PrintRec(head);
+            Console.WriteLine();
+        }
+
+        static void Print(ListItem Head)
+        {
+            while (Head != null)
+            {
+                Console.Write($"{Head.Info} --> ");
+                Head = Head.Next;
+            }
+            Console.WriteLine("Null");
+        }
+
+        static void PrintRec(ListItem Head)
+        {
+            if (Head != null)
+            {
+
+                PrintRec(Head.Next);
+                Console.Write($"{Head.Info} --> ");
+            }
+            else
+            {
+                Console.Write("Null --> ");
+
+            }
+        }
+
+        static void addToHead(ref ListItem head, int info)
+        {
+            var item = new ListItem();
+            item.Info = info;
+            item.Next = head;
+            head = item;
+        }
+
+        static void addToTail(ref ListItem Head, int info)
+        {
+            var newItem = new ListItem();
+            newItem.Info = info;
+
+            if(Head == null)
+            {
+                Head = newItem;
+                return;
+            }
+
+            var item = Head;
+
+            while (item.Next != null)
+            {
+                item = item.Next;
+                item.Next = newItem;
+            }
+
+        }
+
+    }
+}
