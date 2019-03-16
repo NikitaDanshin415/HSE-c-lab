@@ -16,11 +16,6 @@ namespace ConsoleApplication9
             addToHead(ref head, 10);
             addToHead(ref head, 15);
 
-            //head.Next = new ListItem();
-            //head.Next.Info = 10;
-
-            //head.Next.Next = new ListItem();
-            //head.Next.Next.Info = 15;
 
             PrintRec(head);
             addToTail(ref head, 20);
@@ -49,10 +44,10 @@ namespace ConsoleApplication9
             else
             {
                 Console.Write("Null --> ");
-
             }
         }
-
+        ------------------------Экзамен-----------------------------------------
+        // Операция добавления в начало
         static void addToHead(ref ListItem head, int info)
         {
             var item = new ListItem();
@@ -60,7 +55,8 @@ namespace ConsoleApplication9
             item.Next = head;
             head = item;
         }
-
+        
+        // Операция добавления в конец
         static void addToTail(ref ListItem Head, int info)
         {
             var newItem = new ListItem();
@@ -81,6 +77,63 @@ namespace ConsoleApplication9
             }
 
         }
+        // Поиск элемента в списке
+        static void FindElem(ref ListItem Head, int info)
+        {
+            var newItem = new ListItem();
+            newItem.Info = info;
+
+            if(Head == info)
+            {
+                Console.WriteLine($'Элемент {info} присутствует в списке');
+            }
+            if(Head == null)
+            {
+                Console.WriteLine($'Элемент {info} отсутствует в списке');
+            }
+            var item = Head;
+
+            while (item.Next != null)
+            {
+                item = item.Next;
+                item.Next = newItem;
+            }
+
+        }
+        
+        //Удаление элемента из списка
+        public bool Remove(T data)
+        {
+            Node<T> current = head;
+            Node<T> previous = null;
+
+            while (current != null)
+            {
+                if (current.Data.Equals(data))
+                {
+                    // Если узел в середине или в конце
+                    if (previous != null)
+                    {
+                        previous.Next = current.Next;
+                        if (current.Next == null)
+                            tail = previous;
+                    }
+                    else
+                    {
+                        head = head.Next;
+
+                        if (head == null)
+                            tail = null;
+                    }
+                    count--;
+                    return true;
+                }
+                previous = current;
+                current = current.Next;
+            }
+            return false;
+        }
+       
 
     }
 }
