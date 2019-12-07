@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Введите количество работ");
+            int n = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите количество работников");
+            int k = Convert.ToInt32(Console.ReadLine());
+            double[] mas = new double[n];
+            double[] mas2 = new double[n-1];
+            double sum = 0;
+            double max = 0;
+            int maxInd = 0;
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine("Введите длительность текущей работы");
+                mas[i] = Convert.ToInt32(Console.ReadLine());
+                sum = sum + mas[i];
+                if (mas[i] > max)
+                {
+                    max = mas[i];
+                    maxInd = i;
+                }
+            }
+
+            double partOfStrip = sum / k;
+            if (partOfStrip < max)
+            {
+                partOfStrip = mas[maxInd];
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Работник {k} выполняет работу {maxInd+1} с 0 до {partOfStrip}");
+                Console.ForegroundColor = ConsoleColor.White;
+                k--;
+                n--;
+                sum -= mas[maxInd];
+                
+                for (int i = 0; i < mas.Length; i++)
+                {
+                    if(i != maxInd)
+                    {
+                        mas2[i] = mas[i];
+                    }
+                }
+                
+
+            }
+
+
+           
+            var workerID = 1;
+            var acc = 0.0;
+            Console.WriteLine($"Работник #{workerID}:");
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write($"\tРабота #{i + 1}:{String.Format("{0:f2}", acc)}-");
+                acc +=mas[i];
+                if (acc < partOfStrip)
+                {
+                Console.WriteLine($"{String.Format("{0:f2}", acc)}");
+                }
+                else
+                {
+                    Console.WriteLine($"{String.Format("{0:f2}", partOfStrip)}");
+                    if (workerID < k)
+                    {
+                        acc -= partOfStrip;
+                        workerID++;
+                    }
+                    else break;
+                    Console.WriteLine($"Работник #{workerID}:");
+                    Console.WriteLine($"\tРабота #{i + 1}: 0-{String.Format("{0:f2}", acc)}");
+                }
+            }
+           
+        }
+      
+    }
+}
