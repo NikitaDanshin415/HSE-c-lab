@@ -327,21 +327,32 @@ namespace ConsoleApp1
 
         static int[] dellElem(int[] a)
         {
-            int count;
-            Console.WriteLine("Какое количество элементов с конца вы хотите удалить?");
-            while (!int.TryParse(Console.ReadLine(), out count))
+            int dellFrom;
+            Console.WriteLine("Введите элемент К с которого нужно начать удаление");
+            while (!int.TryParse(Console.ReadLine(), out dellFrom))
             {
                 Console.Write("Введите целочисленное число");
             }
 
-            if (!(a.Length < count))
+            int dellCount;
+            Console.WriteLine("Сколько элементов нужно удалить?");
+            while (!int.TryParse(Console.ReadLine(), out dellCount))
             {
-                int[] b = new int[(a.Length - count - 1) + 1];
-                for (int i = 0; i < a.Length - count; i++)
+                Console.Write("Введите целочисленное число");
+            }
+
+            if (!(a.Length < dellFrom))
+            {
+                int[] b = new int[a.Length - dellCount];
+             
+                for (int i = 0, j = 0; i < a.Length; i++)
                 {
-                    b[i] = a[i];
+                    if (i < dellFrom || i > dellFrom + dellCount - 1)
+                    {
+                        b[j] = a[i];
+                        j++;
+                    }
                 }
-                a = null;
                 return b;
             }
             else
