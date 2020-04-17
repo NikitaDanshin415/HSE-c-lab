@@ -1,17 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleApplication11
+namespace ConsoleApp1
 {
     class Program
     {
         static void Main(string[] args)
         {
             bool go = true;
-           
+
             while (go)
             {
                 string selection = string.Empty;
@@ -121,7 +117,7 @@ namespace ConsoleApplication11
                 {
                     case "1":
 
-                        int strings,columns;
+                        int strings, columns;
                         Console.Write("Введите количество строк массива = ");
                         while (!int.TryParse(Console.ReadLine(), out strings))
                         {
@@ -133,13 +129,13 @@ namespace ConsoleApplication11
                         {
                             Console.Write("Ошибка ввода, введите целочисленное число = ");
                         }
-                        numsQ = CreateQuadArray(strings,columns);
+                        numsQ = CreateQuadArray(strings, columns);
                         printQuadArray(numsQ);
                         break;
                     case "2":
                         if (numsQ == null)
                         {
-                            printEmptyArrayError();                         
+                            printEmptyArrayError();
                             break;
                         }
                         else
@@ -384,13 +380,11 @@ namespace ConsoleApplication11
 
         public static int[][] dellStrings(int[][] a)
         {
-            int delStart = 0, delCount = 0, lg = 0;         
-        
-            lg = a.Length - (delCount + 1);
+            int delStart = 0, delEnd = 0, lg = 0;
+
+
             if (a.Length > 0)
             {
-                int[][] nums = new int[lg][];
-                int j = 0;
 
                 Console.Write("Введите строку с которой начать удаление = ");
                 while ((!int.TryParse(Console.ReadLine(), out delStart)) || (delStart < 0) || (delStart > a.Length))
@@ -400,18 +394,21 @@ namespace ConsoleApplication11
                     Console.ResetColor();
                 }
 
-                Console.Write("Сколько строк удалить? = ");
+                Console.Write("Введите строку с которой закончить удаление = ");
 
-                while ((!int.TryParse(Console.ReadLine(), out delCount)) || (delCount <= 0) || (delCount > a.Length) || (delStart + delCount > a.Length))
+                while ((!int.TryParse(Console.ReadLine(), out delEnd)) || (delEnd <= 0) || (delEnd > a.Length) || (delStart + delEnd > a.Length))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Произошла ошибка, проверьте правильность введенных данных");
                     Console.ResetColor();
                 }
 
+                int[][] nums = new int[a.Length - (delEnd - delStart + 1)][];
+                int j = 0;
+
                 for (int i = 0; i < a.Length; i++)
                 {
-                    if (i < delStart || delStart + delCount < i)
+                    if (i < delStart || delEnd < i)
                     {
                         nums[j] = a[i];
                         j++;
